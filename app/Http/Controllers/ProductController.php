@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
+use App\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = DB::table('Products')->get();
+        $products = Product::all();
         dd($products);
         return view('products.index');
-        //return 'This is the list of products from CONTROLLER';
     }
 
     public function create()
@@ -24,13 +24,10 @@ class ProductController extends Controller
     }
     public function show($product)
     {
-        //using first we'll get the information of the first row and not the collection
-        //$product = DB::table('Products')->where('id', $product)->first();
-        //other way to get the same result by the parameter $product
-        $product = DB::table('products')->find($product);
+        $product = Product::findOrFail($product);
         dd($product);
         return view('products.show');
-        //return "Showing products with id {$product}";
+
     }
     public function edit($product)
     {
