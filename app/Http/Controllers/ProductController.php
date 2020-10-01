@@ -22,20 +22,18 @@ class ProductController extends Controller
     }
     public function store()
     {
-        /* first way to create a new product 
-        $product = Product::create([
-            'title' => request()->title,
-            'description' => request()->description,
-            'price' => request()->price,
-            'stock' => request()->stock,
-            'status' => request()->status,
-        ]);
-        */
+        if(request()->status == 'available' && request()->stock == 0){
+            //session()->put('error', 'If available must have stock');
+            session()->flash('error', 'If available must have stock');
+            return redirect()->back();
+        }
 
-        /*This way works because we've created an var fillable
-        in our Product model*/
+        session()->forget('error');
         $product = Product::create(request()->all());
-        return $product;
+        //return $product;
+        //return redirect()->back();
+        //return redirect()->action('MainController@index');
+        return redirect()->route('products.index');
     }
     public function show($product)
     {
@@ -58,12 +56,14 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($product);
         $product->update(request()->all());
-        return $product;
+        return redirect()->route('products.index');
+        //return $product;
     }
     public function destroy($product)
     {
         $product = Product::findOrFail($product);
         $product->delete();
-        return $product;
+        return redirect()->route('products.index');
+        //return $product;
     }
 }

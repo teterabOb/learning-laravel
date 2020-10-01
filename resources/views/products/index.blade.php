@@ -20,7 +20,7 @@
                     <th>Price</th>
                     <th>Stock</th>
                     <th>Status</th>
-                    <th>Actions</th>
+                    <th colspan="3">Actions</th>
                 </tr>
             </thead>
             <tbody>
