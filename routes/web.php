@@ -32,5 +32,5 @@ Route::get('/products/{product}/edit', 'ProductController@edit')->name('products
 //podemos ocupar match para utilizar mas de un verbo
 Route::match(['put', 'patch'],'/products/{product}', 'ProductController@update')->name('products.update');
 
-Route::delete('/products/{product}', 'ProductController@delete')->name('products.destroy');
+Route::delete('/products/{product}', 'ProductController@destroy')->name('products.destroy');
 
