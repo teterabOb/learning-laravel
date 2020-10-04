@@ -15,26 +15,36 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'MainController@index')->name('main');
 
+Route::resource('products', 'ProductController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+/*
+
 Route::get('/products', 'ProductController@index')->name('products.index');
 
 Route::get('/products/create', 'ProductController@create')->name('products.create');
 
-/*  
-    Aunque tenga el mismo nombre que la funcion de arriba
-    No importa, ya que el verbo (GET, POST) es diferente 
-*/
+ 
+    Even if the routes share the same name it does not matter
+    because both have differents verbs , GET and POST
+    Depending on the request, the route identifies
+    which one it should call
+
 Route::post('/products/create', 'ProductController@store')->name('products.store');
 
 Route::get('/products/{product}', 'ProductController@show')->name('products.show');
 
 Route::get('/products/{product}/edit', 'ProductController@edit')->name('products.edit');
 
-//podemos ocupar match para utilizar mas de un verbo
+//We can use match to use more than one verb, as below we use put and patch
 Route::match(['put', 'patch'],'/products/{product}', 'ProductController@update')->name('products.update');
 
 Route::delete('/products/{product}', 'ProductController@destroy')->name('products.destroy');
 
 
-Auth::routes();
+*/
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+
