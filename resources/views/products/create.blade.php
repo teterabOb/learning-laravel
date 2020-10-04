@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <h1>Create a product</h1>
+    
     <form action="" method="post" action="{{ route('products.store') }}" >
         @csrf
         <div class="form-row">
@@ -28,7 +29,7 @@
                 <option {{ old('status') == 'unavailable' ? 'selected' : ''}} value="unavailable" selected>Unavailable</option>
             </select>
         </div>
-        <div class="form-row">
+        <div class="form-row mt-3">
             <button type="submit" class="btn btn-primary btn-lg">Create Product</button>
         </div>
 
