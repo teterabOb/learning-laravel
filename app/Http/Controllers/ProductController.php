@@ -1,16 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\DB;
 use App\Product;
 use Illuminate\Http\Request;
 
+
 class ProductController extends Controller
 {
-    /*Since I wrote this construct
-    All the functions here are protected by the middleware
-    In case the user wants to acces to this functions
-    Must be logged into the system
+    /*
+        Since I wrote this construct
+        All the functions here are protected by the middleware
+        In case the user wants to acces to this functions
+        Must be logged into the system
     */
     public function __construct()
     {
@@ -36,39 +40,17 @@ class ProductController extends Controller
     public function create()
     {
         return view('products.create');
-        //return 'This is the form to create a product from CONTROLLER';
     }
-    public function store()
-    {
-        $rules = [
-            'title' => ['required', 'max:255'],
-            'description' => ['required', 'max:1000'],
-            'price' => ['required', 'min:1'],
-            'stock' => ['required', 'min:0'],
-            'status' => ['required', 'in:available,unavailable'],
-        ];
+    public function store(ProductRequest $request)
+    {    
+        $product = Product::create($request->validated());
 
-        request()->validate($rules);
-
-        if(request()->status == 'available' && request()->stock == 0){
-            return redirect()
-                    ->back()
-                    ->withInput(request()
-                    ->all())
-                    ->withErrors('If available must have stock');
-        }
-
-        //session()->forget('error');
-        $product = Product::create(request()->all());
-        //session()->flash('success', "The new product with id {$product->id} was created");
         return redirect()
             ->route('products.index')
             ->withSuccess("The new product with id {$product->id} was created");
     }
     public function show(Product $product)
     {
-        //$product = Product::findOrFail($product);
-        //dd($product);
         return view('products.show')->with([
             'product' => $product,
             
@@ -83,19 +65,9 @@ class ProductController extends Controller
         ]);
         //return "Showing the form to edit the product with id {$product}";
     }
-    public function update(Product $product)
+    public function update(ProductRequest $request, Product $product)
     {
-        $rules = [
-            'title' => ['required', 'max:255'],
-            'description' => ['required', 'max:1000'],
-            'price' => ['required', 'min:1'],
-            'stock' => ['required', 'min:0'],
-            'status' => ['required', 'in:available,unavailable'],
-        ];
-
-        request()->validate($rules);
-        //$product = Product::findOrFail($product);
-        $product->update(request()->all());
+        $product->update($request->validated());
         return redirect()
             ->route('products.index')
             ->withSuccess("The product with id {$product->id} was edited");
