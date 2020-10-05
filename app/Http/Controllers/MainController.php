@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Product;
 
 class MainController extends Controller
 {
     public function index()
     {
-        //return view('index');
-        //$name = config('app.undefined', 'welcome');
-        //dd($name);
-        //return view($name);
-        return view('welcome');
+        return view('welcome')->with([
+            'products' => Product::all(),
+        ]);
     }
 }
