@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Order;
 
 class User extends Authenticatable
 {
@@ -48,4 +49,9 @@ class User extends Authenticatable
     protected $dates = [
         'admin_since',
     ];
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'customer_id');
+    }
 } 
