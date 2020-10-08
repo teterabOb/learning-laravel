@@ -16,12 +16,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
-        $count = 50;
-        $products = factory(Product::class, $count)->create();
+        //$products = factory(Product::class, 50)->create();
 
         $users = factory(User::class, 20)
-                    ->create();
+                    ->create()
+                    ->each(function($user){
+                        $image = factory(Image::class)
+                            ->user()
+                            ->make();
+
+                        $user->image()->save($image);
+                    });;
                     
 
         $orders = factory(Order::class, 10)
@@ -34,17 +39,8 @@ class DatabaseSeeder extends Seeder
                         $order->payment()->save($payment);
                     });
 
-
-        /*$users = factory(User::class, $count)
-                    ->create()
-                    ->each(function($user ){
-                        $image = factory(Image::class)
-                            ->user()
-                            ->make();
-
-                        $user->image()->save($image);
-                    });
-        */
+        $products = factory(Product::class, 50)->create();
+        
           
     }
 }
