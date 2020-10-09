@@ -34,4 +34,9 @@ class Product extends Model
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+    public function scopeAvailable($query, $date, $state)
+    {
+        $query->where($date, $state);
+    }
+
 }
