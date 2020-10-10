@@ -30,7 +30,6 @@ class ProductCartController extends Controller
         ]);
 
         $cookie = Cookie::make('cart', $cart->id, 7 * 24 * 60);
-
         return redirect()->back()->cookie($cookie);
     }
 
