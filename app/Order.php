@@ -33,4 +33,6 @@ class Order extends Model
     {
         return $this->morphToMany(Product::class, 'productable')->withPivot('quantity');
     }
+    
+
 }
