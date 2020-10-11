@@ -14,6 +14,7 @@ class OrderController extends Controller
     public function __construct(CartService $cartService)
     {
         $this->cartService = $cartService;
+        $this->middleware('auth');
     }
     /**
      * Show the form for creating a new resource.
@@ -42,18 +43,22 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        /*
-        $cart = $this->cartService->getFromCookie();
-        if (!isset($cart) || $cart->products->isEmpty()) {
-            return redirect()
-                    ->back()
-                    ->withErrors("Your cart is empty");
-        }
-
-        return view('orders.create')->with([
-            'cart' => $cart,
+        //$user = Auth::user();
+        $user = $request->user();
+        $order = $user->orders()->create([
+            'status' => 'pending',
         ]);
-        */
+
+        $cart = $this->cartService->getFromCookie();
+        $cartProductsWithQuantity = $cart
+            ->products
+            ->mapWithKeys(function($product){
+                $element[$product->id] = ['quantity' => $product->pivot->quantity];
+
+                return $element;
+            });
+        
+        $order->products()->attach($cartProductsWithQuantity->toArray());
     }
   
 }

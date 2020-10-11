@@ -26,17 +26,25 @@ class Product extends Model
     {
         return $this->morphedByMany(Cart::class,'productable')->withPivot('quantity');
     }
+    
     public function orders()
     {
         return $this->morphedByMany(Order::class,'productable')->withPivot('quantity');
     }
+
     public function images()
     {
         return $this->morphMany(Image::class, 'imageable');
     }
+
     public function scopeAvailable($query, $date, $state)
     {
         $query->where($date, $state);
+    }
+
+    public function getTotalAttribute()
+    {
+        return $this->pivot->quantity * $this->price;
     }
 
 }

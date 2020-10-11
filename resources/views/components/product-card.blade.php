@@ -8,7 +8,8 @@
         <p class="card-text">{{$product->status}}</p>    
 
         @if (isset($cart))
-            
+        <p class="card-text"><strong>{{ $product->pivot->quantity }}</strong> in your cart
+        <strong>(${{ $product->total }})</strong></p>            
         <form method="POST" action="{{ route('products.carts.destroy', 
                                                 ['cart' => $cart->id,
                                                 'product' => $product->id ]) 
