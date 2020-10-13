@@ -1,34 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Panel;
 
 use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\DB;
 use App\Product;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 
 class ProductController extends Controller
 {
-    /*
-        Since I wrote this construct
-        All the functions here are protected by the middleware
-        In case the user wants to acces to this functions
-        Must be logged into the system
-    */
-    public function __construct()
-    {
-        $this->middleware('auth');
-        /*
-            In this case ONLY the function index written bellow is being protected
-                $this->middleware('auth')->only('index');
-            In this other case all the functions are being protected excepting 
-            index and create as we can se both being part of the array
-                $this->middleware('auth')->except(['index', 'create']);
-
-        */
-    }
-
     public function index()
     {
         $products = Product::all();
