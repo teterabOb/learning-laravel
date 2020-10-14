@@ -1,5 +1,5 @@
 <div class="card">
-       <!--  <img class="card-img-top" src="{{ asset('img/products/1.jpg') }}" height="300"> -->
+         <img class="card-img-top" src="{{ asset('img/products/1.jpg') }}" height="300"> 
        
         <div id="carousel{{ $product->id }}" class="carousel slide carousel-fade">
                 <div class="carousel-inner">
