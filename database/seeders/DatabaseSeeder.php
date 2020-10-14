@@ -1,6 +1,6 @@
 
 <?php
-
+namespace Database\Seeders;
 use App\Cart;
 use App\Image;
 use App\Order;
