@@ -6,9 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Cart;
 use App\Order;
 use App\Image;
+use App\Scopes\AvailableScope;
 
 class Product extends Model
 {
+    protected $table = 'products';
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +23,16 @@ class Product extends Model
         'stock',
         'status',
     ];
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new AvailableScope);
+    }
 
     public function carts()
     {
@@ -37,9 +49,9 @@ class Product extends Model
         return $this->morphMany(Image::class, 'imageable');
     }
 
-    public function scopeAvailable($query, $date, $state)
+    public function scopeAvailable($query)
     {
-        $query->where($date, $state);
+        $query->where('status', 'available');
     }
 
     public function getTotalAttribute()

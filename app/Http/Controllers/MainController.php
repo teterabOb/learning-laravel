@@ -9,7 +9,7 @@ class MainController extends Controller
 {
     public function index()
     {
-        $products = Product::available('status', 'available')->get();
+        $products = Product::all();
         return view('welcome')->with([
             'products' => $products,
         ]);
