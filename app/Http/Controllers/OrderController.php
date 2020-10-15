@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Order;
 use Illuminate\Http\Request;
 use App\Services\CartService;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
@@ -46,16 +47,27 @@ class OrderController extends Controller
     {
         return DB::transaction(function () use($request){
             $user = $request->user();
+
             $order = $user->orders()->create([
                 'status' => 'pending',
             ]);
 
             $cart = $this->cartService->getFromCookie();
+
             $cartProductsWithQuantity = $cart
                 ->products
-                ->mapWithKeys(function($product){
-                    $element[$product->id] = ['quantity' => $product->pivot->quantity];
+                ->mapWithKeys(function($product){                    
+                    $quantity = $product->pivot->quantity;
 
+                    if($product->stock < $quantity)
+                    {
+                        throw ValidationException::withMessages([
+                            'product' => "There is not enough stock for the quantity your required of 
+                            {$product->title}"
+                        ]);
+                    }
+                    $product->decrement('stock', $quantity);
+                    $element[$product->id] = ['quantity' => $product->pivot->quantity];
                     return $element;
                 });
             
