@@ -16,6 +16,5 @@
 
         </div>
     @endempty
-    
-@endsection
 
+@endsection

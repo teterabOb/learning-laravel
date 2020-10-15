@@ -1,13 +1,9 @@
-
 @extends('layouts.app')
 @section('content')
-    <h1>Order Details</h1>  
+    <h1>Order Details</h1>
     <h4 class="text-center"><strong>Grand Total: {{ $cart->total }}</strong></h4>
     <div class="text-center mb-3">
-        <form 
-                method="POST" 
-                action="{{ route('orders.store')}}" 
-                class="d-inline">
+        <form method="POST" action="{{ route('orders.store') }}" class="d-inline">
             @csrf
             <button type="submit" class="btn btn-success">Confirm Order</button>
         </form>
@@ -24,10 +20,10 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($cart->products as $product)                    
+                @foreach ($cart->products as $product)
                     <tr>
                         <td>
-                            <img src="{{ asset($product->images->first()->path)}}">
+                            <img src="{{ asset($product->images->first()->path) }}">
                             {{ $product->title }}
                         </td>
                         <td>{{ $product->price }}</td>

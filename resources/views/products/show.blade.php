@@ -2,6 +2,3 @@
 @section('content')
     @include('components.product-card')
 @endsection
-
-
-

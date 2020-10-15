@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
     <h1>Create a product</h1>
-    
-    <form action="" method="post" action="{{ route('products.store') }}" >
+
+    <form action="" method="post" action="{{ route('products.store') }}">
         @csrf
         <div class="form-row">
             <label for="">Tittle</label>
@@ -18,15 +18,16 @@
         </div>
         <div class="form-row">
             <label for="">Stock</label>
-            <input class="form-control" type="number" min="0"  name="stock" id="" value="{{ old('stock') }}">
+            <input class="form-control" type="number" min="0" name="stock" id="" value="{{ old('stock') }}">
         </div>
         <div class="form-row">
-        
+
             <label for="">Status</label>
-            <select name="status"  class="custom-select">
+            <select name="status" class="custom-select">
                 <option value="0" selected>-- Select --</option>
-                <option {{ old('status') == 'available' ? 'selected' : ''}} value="available" selected>Available</option>
-                <option {{ old('status') == 'unavailable' ? 'selected' : ''}} value="unavailable" selected>Unavailable</option>
+                <option {{ old('status') == 'available' ? 'selected' : '' }} value="available" selected>Available</option>
+                <option {{ old('status') == 'unavailable' ? 'selected' : '' }} value="unavailable" selected>Unavailable
+                </option>
             </select>
         </div>
         <div class="form-row mt-3">
@@ -36,6 +37,3 @@
 
     </form>
 @endsection
-
-
-
